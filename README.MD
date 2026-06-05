@@ -194,3 +194,75 @@ python test_dlq.py
 ---
 
 Real-time status and health checks are available by running `./check_all.sh`.
+(base) hui@MacBookPro project2-cdc % ./check_all.sh
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                    📊 CDC PIPELINE COMPREHENSIVE STATUS                       ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+📌 CONSUMER GROUPS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Group: cdc-group
+    Partition TOPIC: Offset=CURRENT-OFFSET | Lag=LAG | ❌ BACKLOG
+    Partition cdc-employees: Offset=0 | Lag=0 | ✅ CAUGHT UP
+
+  Group: schema-consumer-group
+    Partition TOPIC: Offset=CURRENT-OFFSET | Lag=LAG | ❌ BACKLOG
+    Partition cdc-employees-avro: Offset=1 | Lag=0 | ✅ CAUGHT UP
+    Partition cdc-employees-avro: Offset=4 | Lag=0 | ✅ CAUGHT UP
+    Partition cdc-employees-avro: Offset=1 | Lag=0 | ✅ CAUGHT UP
+
+  Group: fastavro-consumer-group
+    ⚠️  Consumer group not active (no consumers running)
+
+📌 SCHEMA REGISTRY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ✅ Schema Registry running at http://localhost:8081
+  📋 Registered subjects: ["cdc-employees-avro-value"]
+  📄 Avro schema ID: 1 (version 1)
+
+📌 SCHEMA REGISTRY ERRORS (Why messages FAIL to write to Destination DB)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ✅ No schema validation errors detected
+     All CDC records passed Avro validation and were sent to Kafka
+
+📌 DEAD LETTER QUEUE (Messages that failed Kafka processing)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ❌ 6 messages in Dead Letter Queue
+
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │                    DETAILED DLQ MESSAGE ANALYSIS                            │
+  └─────────────────────────────────────────────────────────────────────────────┘
+
+  📋 SUMMARY: These messages were sent to Kafka but FAILED to be processed by consumers
+              They are stored in DLQ for manual inspection and reprocessing.
+
+📌 PRODUCER OFFSET STATUS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  📍 Last processed CDC record: 8
+  ⏳ -1 records pending to send (CDC table has new records)
+
+📌 END-TO-END SYNC VERIFICATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Source DB (sourcedb): 4 employees
+  Destination DB (destdb): 6 employees
+  ⚠️  Difference: -2 records (records that failed validation or are pending)
+
+  Possible reasons for mismatch:
+    • Records failed Avro schema validation (see SCHEMA REGISTRY ERRORS above)
+    • Records are in Dead Letter Queue (see DLQ section above)
+    • Producer hasn't processed pending CDC records
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                           SUMMARY OF FAILURES                                 ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+  ✅ Schema Validation: No failures
+  ❌ Dead Letter Queue: 6 messages failed
+     → These messages reached Kafka but failed consumer processing
+  ⚠️  Sync Mismatch: -2 records difference between source and destination
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚠️  PIPELINE STATUS: DEGRADED - 2 issue(s) detected
+   Review sections above for details and fix recommendations
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
