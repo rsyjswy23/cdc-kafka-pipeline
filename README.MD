@@ -111,6 +111,10 @@ This repository implements a production-grade Change Data Capture (CDC) pipeline
 - Offset Explorer: used to monitor Kafka topics, consumer groups, partition lag, and message offsets.
 ![](project2-cdc/img/offsetExplorer.jpg)
 
+| DBeaver | Offset Explorer |
+|----------|----------|
+| ![DBeaver](project2-cdc/img/DBeaver.jpg) | ![Offset Explorer](project2-cdc/img/offsetExplorer.jpg) |
+
 ## Setup
 
 ### Prerequisites
