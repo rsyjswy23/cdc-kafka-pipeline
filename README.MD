@@ -1,4 +1,5 @@
-# CDC Kafka Pipeline with Idempotency, Avro Schema Registry, fault-tolerant consumer groups, DLQ analysis, Airflow and retry handling with exception monitoring.
+# CDC Kafka Pipeline with 
+Idempotency, Avro Schema Registry, fault-tolerant consumer groups, DLQ analysis, Airflow and retry handling with exception monitoring.
 
 ## Project Overview
 
