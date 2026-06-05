@@ -106,10 +106,8 @@ This repository implements a production-grade Change Data Capture (CDC) pipeline
 ## Tools & Visuals
 
 - DBeaver: used for source and destination database inspection, SQL troubleshooting, and CDC table validation.
-![](project2-cdc/img/DBeaver.jpg)
 
 - Offset Explorer: used to monitor Kafka topics, consumer groups, partition lag, and message offsets.
-![](project2-cdc/img/offsetExplorer.jpg)
 
 | DBeaver | Offset Explorer |
 |----------|----------|
