@@ -1,0 +1,24 @@
+{
+  "namespace": "com.cdc.employee",
+  "type": "record",
+  "name": "EmployeeEvent",
+  "doc": "CDC event for employee table changes from sourcedb to destdb",
+  "fields": [
+    {"name": "cdc_id", "type": "int", "doc": "Unique CDC record ID from emp_cdc table"},
+    {"name": "emp_id", "type": "int", "doc": "Employee ID (primary key)"},
+    {"name": "first_name", "type": "string", "doc": "Employee first name"},
+    {"name": "last_name", "type": "string", "doc": "Employee last name"},
+    {"name": "dob", "type": ["null", "string"], "default": null, "doc": "Date of birth (YYYY-MM-DD)"},
+    {"name": "city", "type": ["null", "string"], "default": null, "doc": "City of residence"},
+    {"name": "salary", "type": "int", "doc": "Employee salary in dollars"},
+    {
+      "name": "action",
+      "type": {
+        "type": "enum",
+        "name": "Action",
+        "symbols": ["INSERT", "UPDATE", "DELETE"]
+      },
+      "doc": "Database operation that triggered this CDC event"
+    }
+  ]
+}
