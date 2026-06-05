@@ -195,7 +195,8 @@ python test_dlq.py
 
 Real-time status and health checks are available by running `./check_all.sh`.
 
-![](project2-cdc/img/report1.jpg)
-![](project2-cdc/img/report2.jpg)
+| Report 1 | Report 2 |
+|----------|----------|
+| ![Report 1](project2-cdc/img/report1.jpg) | ![Report 2](project2-cdc/img/report2.jpg) |
 
 
