@@ -194,14 +194,13 @@ python test_dlq.py
 ---
 
 Real-time status and health checks are available by running `./check_all.sh`.
-(base) hui@MacBookPro project2-cdc % ./check_all.sh
 
-╔══════════════════════════════════════════════════════════════════════════════╗
-║                    📊 CDC PIPELINE COMPREHENSIVE STATUS                       ║
-╚══════════════════════════════════════════════════════════════════════════════╝
+╔══════════════════════════════════════════════════════════════╗
+║          📊 CDC PIPELINE COMPREHENSIVE STATUS                ║
+╚══════════════════════════════════════════════════════════════╝
 
 📌 CONSUMER GROUPS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+──────────────────────────────────────────────────────────────
 
   Group: cdc-group
     Partition TOPIC: Offset=CURRENT-OFFSET | Lag=LAG | ❌ BACKLOG
@@ -214,55 +213,43 @@ Real-time status and health checks are available by running `./check_all.sh`.
     Partition cdc-employees-avro: Offset=1 | Lag=0 | ✅ CAUGHT UP
 
   Group: fastavro-consumer-group
-    ⚠️  Consumer group not active (no consumers running)
+    ⚠️  Consumer group not active
 
 📌 SCHEMA REGISTRY
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+──────────────────────────────────────────────────────────────
   ✅ Schema Registry running at http://localhost:8081
   📋 Registered subjects: ["cdc-employees-avro-value"]
-  📄 Avro schema ID: 1 (version 1)
+  📄 Avro schema ID: 1 (v1)
 
-📌 SCHEMA REGISTRY ERRORS (Why messages FAIL to write to Destination DB)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📌 SCHEMA VALIDATION ERRORS (Failed to write to Dest DB)
+──────────────────────────────────────────────────────────────
   ✅ No schema validation errors detected
-     All CDC records passed Avro validation and were sent to Kafka
 
-📌 DEAD LETTER QUEUE (Messages that failed Kafka processing)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📌 DEAD LETTER QUEUE (Failed Kafka Messages)
+──────────────────────────────────────────────────────────────
   ❌ 6 messages in Dead Letter Queue
 
-  ┌─────────────────────────────────────────────────────────────────────────────┐
-  │                    DETAILED DLQ MESSAGE ANALYSIS                            │
-  └─────────────────────────────────────────────────────────────────────────────┘
 
-  📋 SUMMARY: These messages were sent to Kafka but FAILED to be processed by consumers
-              They are stored in DLQ for manual inspection and reprocessing.
-
-📌 PRODUCER OFFSET STATUS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📌 PRODUCER OFFSET
+──────────────────────────────────────────────────────────────
   📍 Last processed CDC record: 8
-  ⏳ -1 records pending to send (CDC table has new records)
+  ⏳ -1 records pending
 
-📌 END-TO-END SYNC VERIFICATION
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  Source DB (sourcedb): 4 employees
-  Destination DB (destdb): 6 employees
-  ⚠️  Difference: -2 records (records that failed validation or are pending)
+📌 END-TO-END SYNC
+──────────────────────────────────────────────────────────────
+  Source DB: 4 employees
+  Dest DB:   6 employees
+  ⚠️  Difference: -2 records
 
-  Possible reasons for mismatch:
-    • Records failed Avro schema validation (see SCHEMA REGISTRY ERRORS above)
-    • Records are in Dead Letter Queue (see DLQ section above)
-    • Producer hasn't processed pending CDC records
-
-╔══════════════════════════════════════════════════════════════════════════════╗
-║                           SUMMARY OF FAILURES                                 ║
-╚══════════════════════════════════════════════════════════════════════════════╝
+╔══════════════════════════════════════════════════════════════╗
+║                      SUMMARY OF FAILURES                     ║
+╚══════════════════════════════════════════════════════════════╝
   ✅ Schema Validation: No failures
-  ❌ Dead Letter Queue: 6 messages failed
-     → These messages reached Kafka but failed consumer processing
-  ⚠️  Sync Mismatch: -2 records difference between source and destination
+  ❌ Dead Letter Queue: 6 messages
+  ⚠️  Sync Mismatch: -2 records difference
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⚠️  PIPELINE STATUS: DEGRADED - 2 issue(s) detected
-   Review sections above for details and fix recommendations
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+──────────────────────────────────────────────────────────────
+⚠️  PIPELINE DEGRADED - 2 issue(s) found
+──────────────────────────────────────────────────────────────
+
+
