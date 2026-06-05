@@ -103,7 +103,7 @@ This repository implements a production-grade Change Data Capture (CDC) pipeline
 6. `check_all.sh` provides a single-pane status report.
 7. Airflow schedules producer execution every 2 minutes.
 
-## Tools & Visuals
+## Reports & Visuals
 
 - Real-time status and health checks are available by running `./check_all.sh`.
 
