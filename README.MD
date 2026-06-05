@@ -105,6 +105,12 @@ This repository implements a production-grade Change Data Capture (CDC) pipeline
 
 ## Tools & Visuals
 
+- Real-time status and health checks are available by running `./check_all.sh`.
+
+| Report 1 | Report 2 |
+|----------|----------|
+| ![Report 1](project2-cdc/img/report1.jpg) | ![Report 2](project2-cdc/img/report2.jpg) |
+
 - DBeaver: used for source and destination database inspection, SQL troubleshooting, and CDC table validation.
 
 - Offset Explorer: used to monitor Kafka topics, consumer groups, partition lag, and message offsets.
@@ -194,11 +200,5 @@ python test_dlq.py
 - Add Prometheus metrics or structured logs for production readiness.
 
 ---
-
-Real-time status and health checks are available by running `./check_all.sh`.
-
-| Report 1 | Report 2 |
-|----------|----------|
-| ![Report 1](project2-cdc/img/report1.jpg) | ![Report 2](project2-cdc/img/report2.jpg) |
 
 
