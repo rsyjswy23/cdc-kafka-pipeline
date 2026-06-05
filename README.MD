@@ -1,4 +1,4 @@
-# CDC Kafka Pipeline with Schema Registry, Idempotency, DLQ, and Airflow
+# CDC Kafka Pipeline with Idempotency, Avro Schema Registry, fault-tolerant consumer groups, DLQ analysis, Airflow and retry handling with exception monitoring.
 
 ## Project Overview
 
@@ -22,14 +22,6 @@ This repository implements a production-grade Change Data Capture (CDC) pipeline
 | CDC Mechanism | PostgreSQL Triggers | - | Automatic change tracking |
 | Serialization | Avro + fastavro | - | Compact binary encoding |
 | Workflow Orchestration | Apache Airflow | 2.7.1 | Scheduled producer execution |
-
-## Tools & Visuals
-
-- DBeaver: used for source and destination database inspection, SQL troubleshooting, and CDC table validation.
-- Offset Explorer: used to monitor Kafka topics, consumer groups, partition lag, and message offsets.
-- Screenshots are included in `project2-cdc/img/`:
-  - `project2-cdc/img/DBeaver.jpg`
-  - `project2-cdc/img/offsetExplorer.jpg`
 
 ## Key Features
 
@@ -110,6 +102,14 @@ This repository implements a production-grade Change Data Capture (CDC) pipeline
 5. Failed Kafka processing is captured in the dead letter queue.
 6. `check_all.sh` provides a single-pane status report.
 7. Airflow schedules producer execution every 2 minutes.
+
+## Tools & Visuals
+
+- DBeaver: used for source and destination database inspection, SQL troubleshooting, and CDC table validation.
+![](project2-cdc/img/DBeaver.jpg)
+
+- Offset Explorer: used to monitor Kafka topics, consumer groups, partition lag, and message offsets.
+![](project2-cdc/img/offsetExplorer.jpg)
 
 ## Setup
 
