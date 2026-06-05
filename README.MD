@@ -195,61 +195,66 @@ python test_dlq.py
 
 Real-time status and health checks are available by running `./check_all.sh`.
 
-╔══════════════════════════════════════════════════════════════╗
-║          📊 CDC PIPELINE COMPREHENSIVE STATUS                ║
-╚══════════════════════════════════════════════════════════════╝
+============================================================
+        CDC PIPELINE COMPREHENSIVE STATUS
+============================================================
 
-📌 CONSUMER GROUPS
-──────────────────────────────────────────────────────────────
+>>> CONSUMER GROUPS
+------------------------------------------------------------
 
   Group: cdc-group
-    Partition TOPIC: Offset=CURRENT-OFFSET | Lag=LAG | ❌ BACKLOG
-    Partition cdc-employees: Offset=0 | Lag=0 | ✅ CAUGHT UP
+    Partition TOPIC: Offset=CURRENT-OFFSET | Lag=LAG | [FAIL] BACKLOG
+    Partition cdc-employees: Offset=0 | Lag=0 | [OK] CAUGHT UP
 
   Group: schema-consumer-group
-    Partition TOPIC: Offset=CURRENT-OFFSET | Lag=LAG | ❌ BACKLOG
-    Partition cdc-employees-avro: Offset=1 | Lag=0 | ✅ CAUGHT UP
-    Partition cdc-employees-avro: Offset=4 | Lag=0 | ✅ CAUGHT UP
-    Partition cdc-employees-avro: Offset=1 | Lag=0 | ✅ CAUGHT UP
+    Partition TOPIC: Offset=CURRENT-OFFSET | Lag=LAG | [FAIL] BACKLOG
+    Partition cdc-employees-avro: Offset=1 | Lag=0 | [OK] CAUGHT UP
+    Partition cdc-employees-avro: Offset=4 | Lag=0 | [OK] CAUGHT UP
+    Partition cdc-employees-avro: Offset=1 | Lag=0 | [OK] CAUGHT UP
 
   Group: fastavro-consumer-group
-    ⚠️  Consumer group not active
+    [WARN] Consumer group not active
 
-📌 SCHEMA REGISTRY
-──────────────────────────────────────────────────────────────
-  ✅ Schema Registry running at http://localhost:8081
-  📋 Registered subjects: ["cdc-employees-avro-value"]
-  📄 Avro schema ID: 1 (v1)
+>>> SCHEMA REGISTRY
+------------------------------------------------------------
+  [OK] Schema Registry running at http://localhost:8081
+  Subjects: ["cdc-employees-avro-value"]
+  Avro schema ID: 1 (version 1)
 
-📌 SCHEMA VALIDATION ERRORS (Failed to write to Dest DB)
-──────────────────────────────────────────────────────────────
-  ✅ No schema validation errors detected
+>>> SCHEMA VALIDATION ERRORS (Failed to write to Dest DB)
+------------------------------------------------------------
+  [OK] No schema validation errors detected
 
-📌 DEAD LETTER QUEUE (Failed Kafka Messages)
-──────────────────────────────────────────────────────────────
-  ❌ 6 messages in Dead Letter Queue
+>>> DEAD LETTER QUEUE (Failed Kafka Messages)
+------------------------------------------------------------
+  [FAIL] 6 messages in Dead Letter Queue
 
+  Sample messages:
 
-📌 PRODUCER OFFSET
-──────────────────────────────────────────────────────────────
-  📍 Last processed CDC record: 8
-  ⏳ -1 records pending
+>>> PRODUCER OFFSET
+------------------------------------------------------------
+  Last processed CDC record: 8
+  [WARN] Offset mismatch detected
 
-📌 END-TO-END SYNC
-──────────────────────────────────────────────────────────────
+>>> END-TO-END SYNC
+------------------------------------------------------------
   Source DB: 4 employees
   Dest DB:   6 employees
-  ⚠️  Difference: -2 records
+  [FAIL] Difference: -2 records
+    Possible causes:
+    - Records failed schema validation
+    - Messages in Dead Letter Queue
+    - Producer pending records
 
-╔══════════════════════════════════════════════════════════════╗
-║                      SUMMARY OF FAILURES                     ║
-╚══════════════════════════════════════════════════════════════╝
-  ✅ Schema Validation: No failures
-  ❌ Dead Letter Queue: 6 messages
-  ⚠️  Sync Mismatch: -2 records difference
+============================================================
+                     SUMMARY OF FAILURES
+============================================================
+  [OK] Schema Validation: No failures
+  [FAIL] Dead Letter Queue: 6 messages
+  [FAIL] Sync Mismatch: -2 records difference
 
-──────────────────────────────────────────────────────────────
-⚠️  PIPELINE DEGRADED - 2 issue(s) found
-──────────────────────────────────────────────────────────────
+------------------------------------------------------------
+[FAIL] PIPELINE DEGRADED - 2 issue(s) found
+------------------------------------------------------------
 
 
